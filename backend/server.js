@@ -30,5 +30,14 @@ app.get("/api/geocode", async (req, res) => {
     }
 });
 
+app.get("/", (req, res) => {
+    res.send({
+      activeStatus: true,
+      error:false
+    })
+  }
+  );
+
+
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
