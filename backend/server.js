@@ -1,4 +1,3 @@
-app.use(cors()); // Allow requests from 
 import express from "express";
 import connectDB from "./db.js";
 import fetch from "node-fetch";
@@ -7,6 +6,7 @@ import cors from "cors";
 const app = express();
 connectDB(); // Connect to MongoDB
 app.use(express.json());
+app.use(cors()); // Allow requests from 
 
 app.get("/api/geocode", async (req, res) => {
     const location = req.query.location;
@@ -32,6 +32,14 @@ app.get("/api/geocode", async (req, res) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+app.get("/", (req, res) => {
+    res.send({
+      activeStatus: true,
+      error:false
+    })
+  }
+  );
 
 
 const PORT = 5000;
