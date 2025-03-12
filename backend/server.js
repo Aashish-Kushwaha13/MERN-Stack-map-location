@@ -1,9 +1,12 @@
 import express from "express";
+import connectDB from "./db.js";
 import fetch from "node-fetch";
 import cors from "cors";
 
 const app = express();
-app.use(cors()); // Allow requests from frontend
+connectDB(); // Connect to MongoDB
+app.use(cors()); // Allow requests from 
+app.use(express.json());
 
 app.get("/api/geocode", async (req, res) => {
     const location = req.query.location;
