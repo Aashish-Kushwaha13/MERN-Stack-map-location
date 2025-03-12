@@ -53,11 +53,10 @@ const RealTimeMap = () => {
   const getCoordinates = async (location) => {
     try {
       setLoading(true);
-      const response = await fetch(`https://mern-stack-map-location.vercel.app/api/geocode?location=${location}`);
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
-      if (data.length > 0) return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-      else return null;
+      return data.length > 0 ? [parseFloat(data[0].lat), parseFloat(data[0].lon)] : null;
     } catch (error) {
       console.error("Error:", error);
       return null;
@@ -65,7 +64,7 @@ const RealTimeMap = () => {
       setLoading(false);
     }
   };
-
+  
   // Fetch shortest route using OSRM API
   const getShortestRoute = async (startCoords, endCoords) => {
     if (!startCoords || !endCoords) return;
@@ -98,16 +97,16 @@ const RealTimeMap = () => {
     }
   };
 
-  const switchLocations = async () => {
+  const switchLocations = () => {
     setInitialLocation(destinationLocation);
     setDestinationLocation(initialLocation);
     setInitialCoords(destinationCoords);
     setDestinationCoords(initialCoords);
     if (destinationCoords && initialCoords) {
-      await getShortestRoute(destinationCoords, initialCoords);
+      setRoute(route.reverse()); // Just reverse the route instead of making another API call
     }
   };
-
+  
   return (
     <div className="p-4 w-full max-w-6xl mx-auto">
       {/* Search Box */}
