@@ -53,7 +53,7 @@ const RealTimeMap = () => {
   const getCoordinates = async (location) => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/geocode?location=${location}`);
+      const response = await fetch(`https://mern-stack-map-location.vercel.app/api/geocode?location=${location}`);
       if (!response.ok) throw new Error("Failed to fetch");
       const data = await response.json();
       if (data.length > 0) return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
